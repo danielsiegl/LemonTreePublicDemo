@@ -1,0 +1,1 @@
+EAConnectString:A-Repo --- DBType=1;Connect=Provider=SQLOLEDB.1;Password=xxx;Persist Security Info=True;User ID=sa;Initial Catalog=A-Repo;Data Source=localhost;LazyLoad=1;
