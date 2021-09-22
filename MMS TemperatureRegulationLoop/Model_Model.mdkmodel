@@ -5111,7 +5111,7 @@
     "visibility" : "public",
     "templateParameterId" : null,
     "typeId" : null,
-    "value" : "9/10/21 1:44 PM"
+    "value" : "9/15/21 11:03 AM"
   } ],
   "definingFeatureId" : "_be00301_1073394345322_922552_1"
 },
@@ -34696,7 +34696,7 @@
   "appliedStereotypeInstanceId" : null,
   "clientDependencyIds" : [ ],
   "supplierDependencyIds" : [ "_18_0beta_8c90288_1394800086928_789001_13512" ],
-  "name" : "Choose the temperature of the area",
+  "name" : "Choose the temperature of the room or area",
   "nameExpression" : null,
   "visibility" : null,
   "templateParameterId" : null,
@@ -36451,20 +36451,11 @@
 },
 {
   "type" : "Mount",
-  "mountedElementId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08_pm",
-  "mountedElementProjectId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08",
+  "mountedElementId" : "PROJECT-877558e9224f114d50dea1f39a1c119_pm",
+  "mountedElementProjectId" : "PROJECT-877558e9224f114d50dea1f39a1c119",
   "mountedRefId" : "master",
   "twcVersion" : -1,
-  "id" : "_12_0EAPbeta_be00301_1156851270584_552173_1",
-  "ownerId" : "PROJECT-70b9ca1a07aafb58e3ac8b1b058c888_pm"
-},
-{
-  "type" : "Mount",
-  "mountedElementId" : "PROJECT-44892a3bf693c0a47eb2f3bf10930f_pm",
-  "mountedElementProjectId" : "PROJECT-44892a3bf693c0a47eb2f3bf10930f",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "_11_5EAPbeta_be00301_1147434586638_637562_1900",
+  "id" : "magicdraw_uml_standard_profile_v_0001",
   "ownerId" : "PROJECT-70b9ca1a07aafb58e3ac8b1b058c888_pm"
 },
 {
@@ -36478,11 +36469,20 @@
 },
 {
   "type" : "Mount",
-  "mountedElementId" : "PROJECT-275116e7-5669-4796-8d65-3c2c8c8d3f9e_pm",
-  "mountedElementProjectId" : "PROJECT-275116e7-5669-4796-8d65-3c2c8c8d3f9e",
+  "mountedElementId" : "PROJECT-44892a3bf693c0a47eb2f3bf10930f_pm",
+  "mountedElementProjectId" : "PROJECT-44892a3bf693c0a47eb2f3bf10930f",
   "mountedRefId" : "master",
   "twcVersion" : -1,
-  "id" : "_18_0beta_8f90291_1391000707955_594012_6218",
+  "id" : "_11_5EAPbeta_be00301_1147434586638_637562_1900",
+  "ownerId" : "PROJECT-70b9ca1a07aafb58e3ac8b1b058c888_pm"
+},
+{
+  "type" : "Mount",
+  "mountedElementId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08_pm",
+  "mountedElementProjectId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08",
+  "mountedRefId" : "master",
+  "twcVersion" : -1,
+  "id" : "_12_0EAPbeta_be00301_1156851270584_552173_1",
   "ownerId" : "PROJECT-70b9ca1a07aafb58e3ac8b1b058c888_pm"
 },
 {
@@ -36496,11 +36496,11 @@
 },
 {
   "type" : "Mount",
-  "mountedElementId" : "PROJECT-877558e9224f114d50dea1f39a1c119_pm",
-  "mountedElementProjectId" : "PROJECT-877558e9224f114d50dea1f39a1c119",
+  "mountedElementId" : "PROJECT-275116e7-5669-4796-8d65-3c2c8c8d3f9e_pm",
+  "mountedElementProjectId" : "PROJECT-275116e7-5669-4796-8d65-3c2c8c8d3f9e",
   "mountedRefId" : "master",
   "twcVersion" : -1,
-  "id" : "magicdraw_uml_standard_profile_v_0001",
+  "id" : "_18_0beta_8f90291_1391000707955_594012_6218",
   "ownerId" : "PROJECT-70b9ca1a07aafb58e3ac8b1b058c888_pm"
 },
 {
