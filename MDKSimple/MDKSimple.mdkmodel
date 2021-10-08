@@ -7733,7 +7733,7 @@
   "supplierDependencyIds" : [ ],
   "name" : "",
   "nameExpression" : null,
-  "visibility" : "public",
+  "visibility" : null,
   "templateParameterId" : null,
   "elementImportIds" : [ ],
   "packageImportIds" : [ ],
@@ -7831,11 +7831,11 @@
 },
 {
   "type" : "Mount",
-  "mountedElementId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142_pm",
-  "mountedElementProjectId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142",
+  "mountedElementId" : "PROJECT-877558e9224f114d50dea1f39a1c119_pm",
+  "mountedElementProjectId" : "PROJECT-877558e9224f114d50dea1f39a1c119",
   "mountedRefId" : "master",
   "twcVersion" : -1,
-  "id" : "_19_0beta_8c4028a_1506585200574_397586_41114",
+  "id" : "magicdraw_uml_standard_profile_v_0001",
   "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
 },
 {
@@ -7867,11 +7867,11 @@
 },
 {
   "type" : "Mount",
-  "mountedElementId" : "PROJECT-877558e9224f114d50dea1f39a1c119_pm",
-  "mountedElementProjectId" : "PROJECT-877558e9224f114d50dea1f39a1c119",
+  "mountedElementId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142_pm",
+  "mountedElementProjectId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142",
   "mountedRefId" : "master",
   "twcVersion" : -1,
-  "id" : "magicdraw_uml_standard_profile_v_0001",
+  "id" : "_19_0beta_8c4028a_1506585200574_397586_41114",
   "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
 },
 {
