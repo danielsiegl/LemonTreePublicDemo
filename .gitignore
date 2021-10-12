@@ -357,3 +357,4 @@ MigrationBackup/
 .ionide/
 *.mdzip.bak
 *.mdkpatch
+*.ldb

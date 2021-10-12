@@ -2,7 +2,7 @@
  * Model Path: C:\LemonTreeTestData\LemonTreePublicDemo\TrafficLight\TrafficLight.eap
  * 
  * Author: rdeininger 
- * Date: 2021-10-07 15:14:55
+ * Date: 2021-10-12 07:53:42
  * 
  * Notes: 
  *  */
@@ -10,6 +10,7 @@
 #define H_CARTRAFFICLIGHT
 
 #include "FSM.h" /* Include for 'relation to classifier' 'FSM' */
+#include "Signals.h" /* Include for 'relation to classifier' 'Signals' */
 #include "time.h" /* Include for 'relation to classifier' 'time' */
 #include "stdio.h" /* Include for 'relation to classifier' 'stdio' */
 #include "stdbool.h" /* Include for 'relation to classifier' 'stdbool' */
