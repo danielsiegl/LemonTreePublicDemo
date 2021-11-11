@@ -7420,7 +7420,7 @@
   "appliedStereotypeInstanceId" : null,
   "clientDependencyIds" : [ ],
   "supplierDependencyIds" : [ ],
-  "name" : "C",
+  "name" : "User",
   "nameExpression" : null,
   "visibility" : null,
   "templateParameterId" : null,
@@ -7702,7 +7702,7 @@
   "supplierDependencyIds" : [ ],
   "name" : "",
   "nameExpression" : null,
-  "visibility" : "public",
+  "visibility" : null,
   "templateParameterId" : null,
   "elementImportIds" : [ ],
   "packageImportIds" : [ ],
@@ -7735,7 +7735,7 @@
   "supplierDependencyIds" : [ ],
   "name" : "",
   "nameExpression" : null,
-  "visibility" : "public",
+  "visibility" : "private",
   "isLeaf" : false,
   "isStatic" : false,
   "typeId" : "_19_0_4_8aa0279_1632302029868_348698_42636",
@@ -7773,7 +7773,7 @@
   "supplierDependencyIds" : [ ],
   "name" : "",
   "nameExpression" : null,
-  "visibility" : "public",
+  "visibility" : "private",
   "isLeaf" : false,
   "isStatic" : false,
   "typeId" : "_19_0_4_8aa0279_1632302046999_709715_42686",
@@ -7801,15 +7801,50 @@
 {
   "_appliedStereotypeIds" : [ ],
   "documentation" : "",
-  "type" : "Actor",
-  "id" : "_19_0_4_8aa0279_1633875040635_946581_42118",
+  "type" : "UseCase",
+  "id" : "_19_0_4_8aa0279_1636641735009_435877_42106",
   "mdExtensionsIds" : [ ],
   "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm",
   "syncElementId" : null,
   "appliedStereotypeInstanceId" : null,
   "clientDependencyIds" : [ ],
   "supplierDependencyIds" : [ ],
-  "name" : "E",
+  "name" : "Use Cae 2",
+  "nameExpression" : null,
+  "visibility" : null,
+  "templateParameterId" : null,
+  "elementImportIds" : [ ],
+  "packageImportIds" : [ ],
+  "isLeaf" : false,
+  "templateBindingIds" : [ ],
+  "useCaseIds" : [ ],
+  "representationId" : null,
+  "collaborationUseIds" : [ ],
+  "generalizationIds" : [ ],
+  "powertypeExtentIds" : [ ],
+  "isAbstract" : false,
+  "isFinalSpecialization" : false,
+  "redefinedClassifierIds" : [ ],
+  "substitutionIds" : [ ],
+  "classifierBehaviorId" : null,
+  "interfaceRealizationIds" : [ ],
+  "extendIds" : [ ],
+  "extensionPointIds" : [ ],
+  "includeIds" : [ ],
+  "subjectIds" : [ ]
+},
+{
+  "_appliedStereotypeIds" : [ ],
+  "documentation" : "",
+  "type" : "Actor",
+  "id" : "_19_0_4_8aa0279_1636644095831_286991_42105",
+  "mdExtensionsIds" : [ ],
+  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm",
+  "syncElementId" : null,
+  "appliedStereotypeInstanceId" : null,
+  "clientDependencyIds" : [ ],
+  "supplierDependencyIds" : [ ],
+  "name" : "",
   "nameExpression" : null,
   "visibility" : "public",
   "templateParameterId" : null,
@@ -7833,7 +7868,7 @@
   "_appliedStereotypeIds" : [ ],
   "documentation" : "",
   "type" : "Association",
-  "id" : "_19_0_4_8aa0279_1633875047300_791292_42142",
+  "id" : "_19_0_4_8aa0279_1636644098183_991455_42129",
   "mdExtensionsIds" : [ ],
   "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm",
   "syncElementId" : null,
@@ -7858,17 +7893,17 @@
   "redefinedClassifierIds" : [ ],
   "substitutionIds" : [ ],
   "isDerived" : false,
-  "memberEndIds" : [ "_19_0_4_8aa0279_1633875047300_621986_42143", "_19_0_4_8aa0279_1633875047301_645358_42144" ],
-  "ownedEndIds" : [ "_19_0_4_8aa0279_1633875047300_621986_42143", "_19_0_4_8aa0279_1633875047301_645358_42144" ],
-  "navigableOwnedEndIds" : [ "_19_0_4_8aa0279_1633875047300_621986_42143", "_19_0_4_8aa0279_1633875047301_645358_42144" ]
+  "memberEndIds" : [ "_19_0_4_8aa0279_1636644098183_268671_42130", "_19_0_4_8aa0279_1636644098184_394338_42131" ],
+  "ownedEndIds" : [ "_19_0_4_8aa0279_1636644098183_268671_42130", "_19_0_4_8aa0279_1636644098184_394338_42131" ],
+  "navigableOwnedEndIds" : [ "_19_0_4_8aa0279_1636644098183_268671_42130", "_19_0_4_8aa0279_1636644098184_394338_42131" ]
 },
 {
   "_appliedStereotypeIds" : [ ],
   "documentation" : "",
   "type" : "Property",
-  "id" : "_19_0_4_8aa0279_1633875047300_621986_42143",
+  "id" : "_19_0_4_8aa0279_1636644098183_268671_42130",
   "mdExtensionsIds" : [ ],
-  "ownerId" : "_19_0_4_8aa0279_1633875047300_791292_42142",
+  "ownerId" : "_19_0_4_8aa0279_1636644098183_991455_42129",
   "syncElementId" : null,
   "appliedStereotypeInstanceId" : null,
   "clientDependencyIds" : [ ],
@@ -7878,7 +7913,7 @@
   "visibility" : "public",
   "isLeaf" : false,
   "isStatic" : false,
-  "typeId" : "_19_0_4_8aa0279_1632302029868_348698_42636",
+  "typeId" : "_19_0_4_8aa0279_1636641735009_435877_42106",
   "isOrdered" : false,
   "isUnique" : true,
   "lowerValue" : null,
@@ -7898,15 +7933,15 @@
   "isID" : false,
   "redefinedPropertyIds" : [ ],
   "subsettedPropertyIds" : [ ],
-  "associationId" : "_19_0_4_8aa0279_1633875047300_791292_42142"
+  "associationId" : "_19_0_4_8aa0279_1636644098183_991455_42129"
 },
 {
   "_appliedStereotypeIds" : [ ],
   "documentation" : "",
   "type" : "Property",
-  "id" : "_19_0_4_8aa0279_1633875047301_645358_42144",
+  "id" : "_19_0_4_8aa0279_1636644098184_394338_42131",
   "mdExtensionsIds" : [ ],
-  "ownerId" : "_19_0_4_8aa0279_1633875047300_791292_42142",
+  "ownerId" : "_19_0_4_8aa0279_1636644098183_991455_42129",
   "syncElementId" : null,
   "appliedStereotypeInstanceId" : null,
   "clientDependencyIds" : [ ],
@@ -7916,7 +7951,7 @@
   "visibility" : "public",
   "isLeaf" : false,
   "isStatic" : false,
-  "typeId" : "_19_0_4_8aa0279_1633875040635_946581_42118",
+  "typeId" : "_19_0_4_8aa0279_1636644095831_286991_42105",
   "isOrdered" : false,
   "isUnique" : true,
   "lowerValue" : null,
@@ -7936,60 +7971,7 @@
   "isID" : false,
   "redefinedPropertyIds" : [ ],
   "subsettedPropertyIds" : [ ],
-  "associationId" : "_19_0_4_8aa0279_1633875047300_791292_42142"
-},
-{
-  "type" : "Mount",
-  "mountedElementId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67_pm",
-  "mountedElementProjectId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "cad57231-da70-4698-9930-327efc8023f2",
-  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
-},
-{
-  "type" : "Mount",
-  "mountedElementId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142_pm",
-  "mountedElementProjectId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "_19_0beta_8c4028a_1506585200574_397586_41114",
-  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
-},
-{
-  "type" : "Mount",
-<<<<<<< HEAD
-  "mountedElementId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67_pm",
-  "mountedElementProjectId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "cad57231-da70-4698-9930-327efc8023f2",
-=======
-  "mountedElementId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08_pm",
-  "mountedElementProjectId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "_12_0EAPbeta_be00301_1156851270584_552173_1",
->>>>>>> 5432b0f (Some changes in my Feature)
-  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
-},
-{
-  "type" : "Mount",
-<<<<<<< HEAD
-  "mountedElementId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142_pm",
-  "mountedElementProjectId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "_19_0beta_8c4028a_1506585200574_397586_41114",
-  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
-=======
-  "mountedElementId" : "PROJECT-b818821ad5fb9956e13d5fa929369fcb_pm",
-  "mountedElementProjectId" : "PROJECT-b818821ad5fb9956e13d5fa929369fcb",
-  "mountedRefId" : "master",
-  "twcVersion" : -1,
-  "id" : "_12_0_8f90291_1163762295984_947862_300",
-  "ownerId" : "_12_0EAPbeta_be00301_1156851270584_552173_1"
->>>>>>> 5432b0f (Some changes in my Feature)
+  "associationId" : "_19_0_4_8aa0279_1636644098183_991455_42129"
 },
 {
   "type" : "Mount",
@@ -7998,6 +7980,42 @@
   "mountedRefId" : "master",
   "twcVersion" : -1,
   "id" : "magicdraw_uml_standard_profile_v_0001",
+  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
+},
+{
+  "type" : "Mount",
+  "mountedElementId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142_pm",
+  "mountedElementProjectId" : "PROJECT-72379b04-6dc6-43b6-8e2b-e79a5a6de142",
+  "mountedRefId" : "master",
+  "twcVersion" : -1,
+  "id" : "_19_0beta_8c4028a_1506585200574_397586_41114",
+  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
+},
+{
+  "type" : "Mount",
+  "mountedElementId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08_pm",
+  "mountedElementProjectId" : "PROJECT-9b4d2b1641e6203934d95e7bde5fe08",
+  "mountedRefId" : "master",
+  "twcVersion" : -1,
+  "id" : "_12_0EAPbeta_be00301_1156851270584_552173_1",
+  "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
+},
+{
+  "type" : "Mount",
+  "mountedElementId" : "PROJECT-b818821ad5fb9956e13d5fa929369fcb_pm",
+  "mountedElementProjectId" : "PROJECT-b818821ad5fb9956e13d5fa929369fcb",
+  "mountedRefId" : "master",
+  "twcVersion" : -1,
+  "id" : "_12_0_8f90291_1163762295984_947862_300",
+  "ownerId" : "_12_0EAPbeta_be00301_1156851270584_552173_1"
+},
+{
+  "type" : "Mount",
+  "mountedElementId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67_pm",
+  "mountedElementProjectId" : "PROJECT-595f5a46-4bbd-4126-86a6-ec01f155cb67",
+  "mountedRefId" : "master",
+  "twcVersion" : -1,
+  "id" : "cad57231-da70-4698-9930-327efc8023f2",
   "ownerId" : "PROJECT-4fda9c78-05e0-46bf-914d-ff9d5934c5e3_pm"
 },
 {
@@ -8093,11 +8111,7 @@
     "visibility" : "public",
     "templateParameterId" : null,
     "typeId" : null,
-<<<<<<< HEAD
-    "value" : "10/10/21 5:06 PM"
-=======
-    "value" : "10/10/21 4:10 PM"
->>>>>>> 5432b0f (Some changes in my Feature)
+    "value" : "11/11/21 4:21 PM"
   } ],
   "definingFeatureId" : "_be00301_1073394345322_922552_1"
 },
