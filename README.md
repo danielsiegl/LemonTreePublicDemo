@@ -6,7 +6,3 @@ Documentation: https://help.lieberlieber.com/display/LT/LemonTree+and+GitFlow
 Get LemonTree: https://www.lieberlieber.com/lemontree/en/
 
 Contact us if you want to be a "contributor"
-
-Now also with MPMS Testdata for LemonTree 3
-
-test Manuel
