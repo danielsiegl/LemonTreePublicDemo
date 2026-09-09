@@ -12,7 +12,7 @@ is the default for every script.
 
 ## Prerequisites
 
-- Windows with PowerShell 5.1 (or PowerShell 7)
+- Windows with PowerShell 7
 - Network access to `nexus.lieberlieber.com` and your Codebeamer server
 - A `.secrets` file (see below)
 
