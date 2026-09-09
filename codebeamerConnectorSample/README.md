@@ -1,5 +1,7 @@
 # LemonTree.Connect Codebeamer Automation Sample
 
+It’s a "what-if" comparison: it imports the latest requirements from Codebeamer into a copy of the model's current state in Git and then performs a comparison using LemonTree.Automation—which can be opened in LemonTree.
+
 This sample runs the LemonTree Connect **Codebeamer** integration on Windows using PowerShell.
 It is the PowerShell equivalent of the GitLab CI flow of the `lemontree-jama-devops` sample,
 with two differences: it uses the Codebeamer connector instead of Jama, and it runs natively on
