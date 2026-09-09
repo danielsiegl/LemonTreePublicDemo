@@ -1,4 +1,4 @@
-# Codebeamer Connector Sample
+# LemonTree.Connect Codebeamer Automation Sample
 
 This sample runs the LemonTree Connect **Codebeamer** integration on Windows using PowerShell.
 It is the PowerShell equivalent of the GitLab CI flow of the `lemontree-jama-devops` sample,
