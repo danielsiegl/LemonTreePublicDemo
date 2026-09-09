@@ -358,3 +358,6 @@ MigrationBackup/
 *.mdzip.bak
 *.mdkpatch
 *.ldb
+
+# local credentials / license files
+.secrets
