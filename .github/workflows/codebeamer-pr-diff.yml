@@ -97,7 +97,7 @@ jobs:
 
           $targetUrl = "$env:REVIEW_SESSION_URL/$sessionFileName"
           while (Test-Path Alias:curl) { Remove-Item Alias:curl }
-          curl "-u$env:NEXUS_AUTHENTICATION" -T $publishedSessionPath $targetUrl
+          curl.exe --fail --show-error "-u$env:NEXUS_AUTHENTICATION" -T $publishedSessionPath $targetUrl
           if ($LASTEXITCODE -ne 0) {
             throw "Failed to upload LemonTree session file to $env:REVIEW_SESSION_URL."
           }
