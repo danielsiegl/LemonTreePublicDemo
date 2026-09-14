@@ -92,9 +92,10 @@ Useful options:
 ## GitHub Actions pull request workflow
 
 This repository includes a PR workflow at `.github/workflows/codebeamer-pr-diff.yml` that runs
-the same integration for trusted same-repository pull requests. It runs on PR open, reopen and
-every new PR commit (`synchronize`), imports the latest Codebeamer requirements into a copy of the
-model, converts the generated LemonTree XML diff to Markdown and updates a single PR comment.
+the same integration for trusted same-repository pull requests opened and updated by the repository
+owner. It runs on PR open, reopen and every new PR commit (`synchronize`), imports the latest
+Codebeamer requirements into a copy of the model, converts the generated LemonTree XML diff to
+Markdown and updates a single PR comment.
 
 Add these GitHub Actions secrets before enabling the workflow:
 

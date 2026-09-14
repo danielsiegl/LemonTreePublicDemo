@@ -17,7 +17,10 @@ env:
 
 jobs:
   codebeamer-pr-diff:
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner &&
+      github.actor == github.repository_owner
     runs-on: windows-latest
     timeout-minutes: 30
     defaults:
