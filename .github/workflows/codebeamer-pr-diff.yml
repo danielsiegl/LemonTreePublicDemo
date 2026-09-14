@@ -1,7 +1,7 @@
 name: Codebeamer PR diff
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
@@ -29,12 +29,25 @@ jobs:
         working-directory: codebeamerConnectorSample
 
     steps:
-      - name: Checkout PR head
+      - name: Checkout trusted base
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          lfs: true
+          persist-credentials: false
+
+      - name: Checkout PR model
         uses: actions/checkout@v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
+          path: pr-head
+          fetch-depth: 1
           lfs: true
+          persist-credentials: false
+          sparse-checkout: |
+            codebeamerConnectorSample/LT.Connect Codebeamer Demo.qeax
+          sparse-checkout-cone-mode: false
 
       - name: Prepare Codebeamer secrets
         env:
@@ -70,7 +83,7 @@ jobs:
       - name: Run Codebeamer integration
         run: |
           .\Invoke-CodebeamerIntegration.ps1 `
-            -ModelPath ".\LT.Connect Codebeamer Demo.qeax" `
+            -ModelPath "..\pr-head\codebeamerConnectorSample\LT.Connect Codebeamer Demo.qeax" `
             -WorkingDirectory ".\.tmp"
 
       - name: Convert LemonTree diff to Markdown
