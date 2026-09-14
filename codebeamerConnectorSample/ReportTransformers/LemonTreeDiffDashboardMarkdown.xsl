@@ -36,6 +36,7 @@
   <xsl:variable name="eMoved"    select="$visibleElements[contains(@diffState, 'Moved') and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed'))]"/>
   <xsl:variable name="eModified" select="$visibleElements[(starts-with(@diffState, 'Modified') or contains(@diffState, 'Modified,')) and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed')) and not(contains(@diffState, 'Moved'))]"/>
   <xsl:variable name="eSub"      select="$visibleElements[contains(@diffState, 'SubElementModified') and not(starts-with(@diffState, 'Modified')) and not(contains(@diffState, 'Modified,')) and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed')) and not(contains(@diffState, 'Moved'))]"/>
+  <xsl:variable name="suspectedLinks" select="$visibleElements[cr:connectedElements/cr:connectedElement][cr:changedProperties/cr:property[@name = 'Stereotypes' and contains(@newValue, 'suspected{LemonTree Connect::suspected}:Stereotype') and not(contains(@oldValue, 'suspected{LemonTree Connect::suspected}:Stereotype'))]]"/>
 
   <!-- ====================================================================== -->
   <!-- Helpers                                                                -->
@@ -124,6 +125,35 @@
     <xsl:variable name="cAll" select="count($visibleElements)"/>
     <xsl:variable name="cPackages" select="count(cr:changes/cr:package)"/>
     <xsl:variable name="cProps" select="count($visibleElements/cr:changedProperties/cr:property[not(contains($properitiesToHide, @name))])"/>
+    <xsl:variable name="cSuspected" select="count($suspectedLinks)"/>
+
+<xsl:if test="$cSuspected &gt; 0">
+<xsl:text>## ⚠️ Suspected Traceability Links&#10;&#10;</xsl:text>
+<xsl:text>**</xsl:text>
+<xsl:value-of select="$cSuspected"/>
+<xsl:text> traceability link</xsl:text>
+<xsl:if test="$cSuspected != 1"><xsl:text>s</xsl:text></xsl:if>
+<xsl:text> marked as suspected. Review these links before merging.**&#10;&#10;</xsl:text>
+<xsl:text>| Type | Name | Package |&#10;</xsl:text>
+<xsl:text>| :--- | :--- | :--- |&#10;</xsl:text>
+<xsl:for-each select="$suspectedLinks">
+  <xsl:sort select="ancestor::cr:package/@qualifiedName"/>
+  <xsl:sort select="@qualifiedName"/>
+  <xsl:text>| `</xsl:text>
+  <xsl:choose>
+    <xsl:when test="@eaUmlType != ''"><xsl:value-of select="@eaUmlType"/></xsl:when>
+    <xsl:otherwise><xsl:value-of select="@umlType"/></xsl:otherwise>
+  </xsl:choose>
+  <xsl:text>` | </xsl:text>
+  <xsl:call-template name="displayName"/>
+  <xsl:text> | `</xsl:text>
+  <xsl:call-template name="escapePipes">
+    <xsl:with-param name="text" select="ancestor::cr:package/@name"/>
+  </xsl:call-template>
+  <xsl:text>` |&#10;</xsl:text>
+</xsl:for-each>
+<xsl:text>&#10;</xsl:text>
+</xsl:if>
 
 <xsl:text>## 🍋 LemonTree Diff Summary&#10;&#10;</xsl:text>
 
