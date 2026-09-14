@@ -50,8 +50,8 @@ if (-not (Test-Path -LiteralPath $StylesheetPath -PathType Leaf)) {
 New-ParentDirectory -Path $OutputPath
 
 $transform = New-Object System.Xml.Xsl.XslCompiledTransform
-$settings = New-Object System.Xml.Xsl.XsltSettings($true, $true)
-$resolver = New-Object System.Xml.XmlUrlResolver
+$settings = New-Object System.Xml.Xsl.XsltSettings($false, $false)
+$resolver = $null
 $reader = $null
 $writer = $null
 
