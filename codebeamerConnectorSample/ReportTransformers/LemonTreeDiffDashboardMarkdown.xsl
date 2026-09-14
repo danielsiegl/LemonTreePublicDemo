@@ -20,13 +20,13 @@
 
   <xsl:output method="text" encoding="utf-8"/>
 
-  <xsl:variable name="properitiesToHide">,OwnedBehaviors,End_Edge,ConnectedElement,Target,Incomings,Outgoings,GraphEdges,GraphNodes,WayPoints,Type,ObjectStyle::LBL,PDATA5,PtEndX,PtEndY,PtStartX,PtStartY,RectBottom,RectLeft,RectRight,RectTop,SeqNo,Start_Edge,StateFlags,Style,StyleEx,</xsl:variable>
+  <xsl:variable name="propertiesToHide">,OwnedBehaviors,End_Edge,ConnectedElement,Target,Incomings,Outgoings,GraphEdges,GraphNodes,WayPoints,Type,ObjectStyle::LBL,PDATA5,PtEndX,PtEndY,PtStartX,PtStartY,RectBottom,RectLeft,RectRight,RectTop,SeqNo,Start_Edge,StateFlags,Style,StyleEx,</xsl:variable>
   <xsl:variable name="elementsToHide">,ConnectorEnd,ea_DiagramLink,ea_DiagramObject,</xsl:variable>
 
   <xsl:variable name="visibleElements"
                 select="//cr:element[not(contains($elementsToHide, concat(',', @umlType, ',')))]
                                     [count(cr:changedProperties/cr:property) = 0
-                                     or count(cr:changedProperties/cr:property[not(contains($properitiesToHide, @name))]) &gt; 0]"/>
+                                     or count(cr:changedProperties/cr:property[not(contains($propertiesToHide, @name))]) &gt; 0]"/>
 
   <xsl:key name="byType" match="cr:element" use="@eaUmlType"/>
 
@@ -124,7 +124,7 @@
     <xsl:variable name="cMoved" select="count($eMoved)"/>
     <xsl:variable name="cAll" select="count($visibleElements)"/>
     <xsl:variable name="cPackages" select="count(cr:changes/cr:package)"/>
-    <xsl:variable name="cProps" select="count($visibleElements/cr:changedProperties/cr:property[not(contains($properitiesToHide, @name))])"/>
+    <xsl:variable name="cProps" select="count($visibleElements/cr:changedProperties/cr:property[not(contains($propertiesToHide, @name))])"/>
     <xsl:variable name="cSuspected" select="count($suspectedLinks)"/>
 
 <xsl:if test="$cSuspected &gt; 0">
