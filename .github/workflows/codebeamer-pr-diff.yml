@@ -1,0 +1,141 @@
+name: Codebeamer PR diff
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  codebeamer-pr-diff:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: codebeamerConnectorSample
+
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          lfs: true
+
+      - name: Prepare Codebeamer secrets
+        env:
+          CODEBEAMER_SERVER: ${{ secrets.CODEBEAMER_SERVER }}
+          CODEBEAMER_USER: ${{ secrets.CODEBEAMER_USER }}
+          CODEBEAMER_PASSWORD: ${{ secrets.CODEBEAMER_PASSWORD }}
+          LEMONTREE_LICENSE: ${{ secrets.LEMONTREE_LICENSE }}
+        run: |
+          $missing = @()
+          foreach ($name in @('CODEBEAMER_SERVER', 'CODEBEAMER_USER', 'CODEBEAMER_PASSWORD', 'LEMONTREE_LICENSE')) {
+            if ([string]::IsNullOrWhiteSpace([Environment]::GetEnvironmentVariable($name))) {
+              $missing += $name
+            }
+          }
+
+          if ($missing.Count -gt 0) {
+            throw "Missing required GitHub secret(s): $($missing -join ', ')"
+          }
+
+          $license = $env:LEMONTREE_LICENSE.Trim()
+          if ($license.StartsWith('LieberLieberRLM=', [System.StringComparison]::OrdinalIgnoreCase)) {
+            $license = $license.Substring('LieberLieberRLM='.Length).Trim()
+          }
+
+          $lines = @(
+            "CodebeamerServer=$env:CODEBEAMER_SERVER",
+            "CodebeamerUser=$env:CODEBEAMER_USER",
+            "CodebeamerPassword=$env:CODEBEAMER_PASSWORD",
+            "LieberLieberRLM=$license"
+          )
+          [System.IO.File]::WriteAllLines((Join-Path $PWD '.secrets'), $lines, [System.Text.UTF8Encoding]::new($false))
+
+      - name: Run Codebeamer integration
+        run: |
+          .\Invoke-CodebeamerIntegration.ps1 `
+            -ModelPath ".\LT.Connect Codebeamer Demo.qeax" `
+            -WorkingDirectory ".\.tmp"
+
+      - name: Convert LemonTree diff to Markdown
+        run: |
+          .\buildscripts\Convert-LemonTreeDiffReportToMarkdown.ps1 `
+            -InputPath ".\.tmp\DiffReport-codebeamer.xml" `
+            -StylesheetPath ".\ReportTransformers\LemonTreeDiffDashboardMarkdown.xsl" `
+            -OutputPath ".\.tmp\DiffReport-codebeamer.md"
+
+      - name: Upload Codebeamer diff artifacts
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: codebeamer-diff
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            codebeamerConnectorSample/.tmp/DiffReport-codebeamer.xml
+            codebeamerConnectorSample/.tmp/DiffReport-codebeamer.md
+            codebeamerConnectorSample/.tmp/session-codebeamer.ltsfs
+            codebeamerConnectorSample/.tmp/codebeamer-changes-count.txt
+            codebeamerConnectorSample/.tmp/packagemappings/codebeamer-import-metadata.json
+            codebeamerConnectorSample/logs/**
+
+      - name: Upsert PR comment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const marker = '<!-- lemontree-codebeamer-diff -->';
+            const workspace = process.env.GITHUB_WORKSPACE;
+            const reportPath = path.join(workspace, 'codebeamerConnectorSample', '.tmp', 'DiffReport-codebeamer.md');
+            const changesPath = path.join(workspace, 'codebeamerConnectorSample', '.tmp', 'codebeamer-changes-count.txt');
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const maxBodyLength = 64000;
+
+            let report = fs.existsSync(reportPath)
+              ? fs.readFileSync(reportPath, 'utf8').trim()
+              : '_The Markdown diff report was not generated._';
+            const changes = fs.existsSync(changesPath)
+              ? fs.readFileSync(changesPath, 'utf8').trim()
+              : 'Changes count was not generated.';
+
+            let body = `${marker}\n## Codebeamer Import Diff\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
+            if (body.length > maxBodyLength) {
+              const available = maxBodyLength - marker.length - 700;
+              body = `${marker}\n## Codebeamer Import Diff\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report.substring(0, available)}\n\n_Report truncated because it exceeded the GitHub comment size limit. Download the full Markdown report and LemonTree session from the [workflow artifacts](${runUrl})._`;
+            }
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(
+              comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(marker)
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

@@ -50,6 +50,17 @@ Verify the file at any time:
 
 It exits with `0` on success and `1` if the file is missing or incomplete.
 
+Upload the same values to GitHub Actions repository secrets with the GitHub CLI:
+
+```powershell
+gh auth login
+.\Set-GitHubSecrets.ps1 -Repository danielsiegl/LemonTreePublicDemo
+```
+
+Use `-WhatIf` to preview the secret names that would be set without uploading values.
+The script also tolerates accidentally pasted values that include a leading `Key=` prefix and
+uploads only the secret value after that prefix.
+
 ## Running the full flow
 
 ```powershell
@@ -75,6 +86,30 @@ Useful options:
 .\Invoke-CodebeamerIntegration.ps1 -SkipDiff      # import only, no post-import diff
 .\Invoke-CodebeamerIntegration.ps1 -ModelPath "other.qeax"
 ```
+
+## GitHub Actions pull request workflow
+
+This repository includes a PR workflow at `.github/workflows/codebeamer-pr-diff.yml` that runs
+the same integration for trusted same-repository pull requests. It runs on PR open, reopen and
+every new PR commit (`synchronize`), imports the latest Codebeamer requirements into a copy of the
+model, converts the generated LemonTree XML diff to Markdown and updates a single PR comment.
+
+Add these GitHub Actions secrets before enabling the workflow:
+
+| Secret | Written to `.secrets` key | Description |
+| --- | --- | --- |
+| `CODEBEAMER_SERVER` | `CodebeamerServer` | URL of the Codebeamer server, e.g. `https://codebeamer.example.com/cb/` |
+| `CODEBEAMER_USER` | `CodebeamerUser` | User name used to log in to Codebeamer |
+| `CODEBEAMER_PASSWORD` | `CodebeamerPassword` | Password of that user |
+| `LEMONTREE_LICENSE` | `LieberLieberRLM` | LieberLieber RLM license string |
+
+`GITHUB_TOKEN` is provided automatically by GitHub Actions and is used for updating the PR comment.
+Codebeamer project and tracker IDs are read from the model mappings; they are not separate secrets.
+The runner needs network access to `nexus.lieberlieber.com`, your Codebeamer server and the RLM
+license server referenced by the license string.
+
+Generated CI artifacts include the XML diff, Markdown diff, LemonTree session file, import metadata
+and connector logs when available.
 
 ## Tools
 
