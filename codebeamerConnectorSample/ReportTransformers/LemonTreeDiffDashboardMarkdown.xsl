@@ -134,23 +134,31 @@
 <xsl:text> traceability link</xsl:text>
 <xsl:if test="$cSuspected != 1"><xsl:text>s</xsl:text></xsl:if>
 <xsl:text> marked as suspected. Review these links before merging.**&#10;&#10;</xsl:text>
-<xsl:text>| Type | Name | Package |&#10;</xsl:text>
+<xsl:text>| Type | Package | Name |&#10;</xsl:text>
 <xsl:text>| :--- | :--- | :--- |&#10;</xsl:text>
 <xsl:for-each select="$suspectedLinks">
   <xsl:sort select="ancestor::cr:package/@qualifiedName"/>
   <xsl:sort select="@qualifiedName"/>
+  <xsl:variable name="stereotypesProperty" select="cr:changedProperties/cr:property[@name = 'Stereotypes'][1]"/>
+  <xsl:variable name="linkTypeSource">
+    <xsl:choose>
+      <xsl:when test="contains($stereotypesProperty/@oldValue, '{')"><xsl:value-of select="$stereotypesProperty/@oldValue"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$stereotypesProperty/@newValue"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:text>| `</xsl:text>
   <xsl:choose>
+    <xsl:when test="contains($linkTypeSource, '{')"><xsl:value-of select="substring-before($linkTypeSource, '{')"/></xsl:when>
     <xsl:when test="@eaUmlType != ''"><xsl:value-of select="@eaUmlType"/></xsl:when>
     <xsl:otherwise><xsl:value-of select="@umlType"/></xsl:otherwise>
   </xsl:choose>
-  <xsl:text>` | </xsl:text>
-  <xsl:call-template name="displayName"/>
-  <xsl:text> | `</xsl:text>
+  <xsl:text>` | `</xsl:text>
   <xsl:call-template name="escapePipes">
     <xsl:with-param name="text" select="ancestor::cr:package/@name"/>
   </xsl:call-template>
-  <xsl:text>` |&#10;</xsl:text>
+  <xsl:text>` | </xsl:text>
+  <xsl:call-template name="displayName"/>
+  <xsl:text> |&#10;</xsl:text>
 </xsl:for-each>
 <xsl:text>&#10;</xsl:text>
 </xsl:if>
