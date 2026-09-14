@@ -74,6 +74,8 @@ if ([string]::IsNullOrWhiteSpace($ModelPath)) { $ModelPath = Get-DefaultModelPat
 if ([string]::IsNullOrWhiteSpace($SecretsPath)) { $SecretsPath = Join-Path $scriptRoot '.secrets' }
 if ([string]::IsNullOrWhiteSpace($WorkingDirectory)) { $WorkingDirectory = Join-Path $scriptRoot '.tmp' }
 
+$WorkingDirectory = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($WorkingDirectory)
+
 Write-Host "========================================="
 Write-Host "Codebeamer connector demo"
 Write-Host "========================================="

@@ -49,18 +49,24 @@ if ([string]::IsNullOrWhiteSpace($LicenseContent)) {
     exit 1
 }
 
-New-ParentDirectory -Path $OutputPath
+$resolvedOutputPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputPath)
+New-ParentDirectory -Path $resolvedOutputPath
 
 # The tools reject licenses with newlines, so pipes act as space placeholders.
-$licenseProcessed = $LicenseContent -replace '\|', ' '
-[System.IO.File]::WriteAllText($OutputPath, $licenseProcessed, [System.Text.UTF8Encoding]$false)
+$licenseProcessed = $LicenseContent.Trim()
+if ($licenseProcessed.StartsWith('LieberLieberRLM=', [System.StringComparison]::OrdinalIgnoreCase)) {
+    Write-Warning "License content includes a leading 'LieberLieberRLM=' prefix. Writing only the value after the prefix."
+    $licenseProcessed = $licenseProcessed.Substring('LieberLieberRLM='.Length).Trim()
+}
+$licenseProcessed = $licenseProcessed -replace '\|', ' '
+[System.IO.File]::WriteAllText($resolvedOutputPath, $licenseProcessed, [System.Text.UTF8Encoding]::new($false))
 
-if (-not (Test-Path -LiteralPath $OutputPath)) {
-    Write-Error "Failed to create license file: $OutputPath"
+if (-not (Test-Path -LiteralPath $resolvedOutputPath)) {
+    Write-Error "Failed to create license file: $resolvedOutputPath"
     exit 1
 }
 
-$fileSize = (Get-Item -LiteralPath $OutputPath).Length
+$fileSize = (Get-Item -LiteralPath $resolvedOutputPath).Length
 if ($fileSize -lt $MinimumSize) {
     Write-Error "License file is too small ($fileSize bytes). License may not have been written correctly."
     exit 1
@@ -68,4 +74,4 @@ if ($fileSize -lt $MinimumSize) {
 
 Write-Host "License file verified ($fileSize bytes)"
 
-return (Get-Item -LiteralPath $OutputPath).FullName
+return (Get-Item -LiteralPath $resolvedOutputPath).FullName

@@ -29,6 +29,7 @@ It must contain:
 | `CodebeamerUser` | User name used to log in to Codebeamer |
 | `CodebeamerPassword` | Password of that user |
 | `LieberLieberRLM` | LieberLieber RLM license string |
+| `NexusAuthentication` | Nexus credentials in `user:password` format, used by the PR workflow to publish LemonTree Web session files |
 
 Format: one `Key=Value` pair per line; lines starting with `#` are comments. Because the license
 must be a single line, spaces in the license string may be written as `|` — the scripts convert
@@ -40,6 +41,7 @@ CodebeamerServer=https://codebeamer.example.com/cb/
 CodebeamerUser=demo.user
 CodebeamerPassword=your-password
 LieberLieberRLM=your-lieberlieber-rlm-license-string
+NexusAuthentication=your-nexus-user:your-nexus-password
 ```
 
 Verify the file at any time:
@@ -49,6 +51,17 @@ Verify the file at any time:
 ```
 
 It exits with `0` on success and `1` if the file is missing or incomplete.
+
+Upload the same values to GitHub Actions repository secrets with the GitHub CLI:
+
+```powershell
+gh auth login
+.\Set-GitHubSecrets.ps1 -Repository danielsiegl/LemonTreePublicDemo
+```
+
+Use `-WhatIf` to preview the secret names that would be set without uploading values.
+The script also tolerates accidentally pasted values that include a leading `Key=` prefix and
+uploads only the secret value after that prefix.
 
 ## Running the full flow
 
@@ -75,6 +88,33 @@ Useful options:
 .\Invoke-CodebeamerIntegration.ps1 -SkipDiff      # import only, no post-import diff
 .\Invoke-CodebeamerIntegration.ps1 -ModelPath "other.qeax"
 ```
+
+## GitHub Actions pull request workflow
+
+This repository includes a PR workflow at `.github/workflows/codebeamer-pr-diff.yml` that runs
+the same integration for trusted same-repository pull requests opened and updated by the repository
+owner. It runs on PR open, reopen and every new PR commit (`synchronize`), imports the latest
+Codebeamer requirements into a copy of the model, converts the generated LemonTree XML diff to
+Markdown and updates a single PR comment.
+
+Add these GitHub Actions secrets before enabling the workflow:
+
+| Secret | Written to `.secrets` key | Description |
+| --- | --- | --- |
+| `CODEBEAMER_SERVER` | `CodebeamerServer` | URL of the Codebeamer server, e.g. `https://codebeamer.example.com/cb/` |
+| `CODEBEAMER_USER` | `CodebeamerUser` | User name used to log in to Codebeamer |
+| `CODEBEAMER_PASSWORD` | `CodebeamerPassword` | Password of that user |
+| `LEMONTREE_LICENSE` | `LieberLieberRLM` | LieberLieber RLM license string |
+| `NEXUSAUTHENTICATION` | `NexusAuthentication` | Nexus credentials in `user:password` format for publishing the LemonTree Web session file |
+
+`GITHUB_TOKEN` is provided automatically by GitHub Actions and is used for updating the PR comment.
+Codebeamer project and tracker IDs are read from the model mappings; they are not separate secrets.
+The runner needs network access to `nexus.lieberlieber.com`, your Codebeamer server and the RLM
+license server referenced by the license string.
+
+Generated CI artifacts include the XML diff, Markdown diff, LemonTree session file, import metadata
+and connector logs when available. The workflow also uploads the `.ltsfs` session file to the
+LemonTree session repository and adds a LemonTree Web review link at the top of the PR comment.
 
 ## Tools
 

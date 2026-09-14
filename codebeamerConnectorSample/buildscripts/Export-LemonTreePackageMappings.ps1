@@ -118,6 +118,8 @@ Write-Host "========================================="
 Write-Host "Model Path: $ModelPath"
 Write-Host "Output Directory: $OutputDirectory"
 
+$resolvedOutputDirectory = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputDirectory)
+
 if (-not (Test-Path -LiteralPath $ModelPath -PathType Leaf)) {
     Write-Error "Model file not found: $ModelPath"
     exit 1
@@ -128,8 +130,8 @@ if (-not (Test-Path -LiteralPath $QueryScriptPath -PathType Leaf)) {
     exit 1
 }
 
-if (-not (Test-Path -LiteralPath $OutputDirectory -PathType Container)) {
-    New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
+if (-not (Test-Path -LiteralPath $resolvedOutputDirectory -PathType Container)) {
+    New-Item -ItemType Directory -Path $resolvedOutputDirectory -Force | Out-Null
 }
 
 $resolvedGuids = @()
@@ -184,9 +186,9 @@ foreach ($packageGuid in $resolvedGuids) {
     }
 
     $safeGuid = ($guid -replace '[{}]', '') -replace '[^A-Za-z0-9_-]', '_'
-    $outputFile = Join-Path $OutputDirectory ("packagemapping_{0}.xml" -f $safeGuid)
+    $outputFile = Join-Path $resolvedOutputDirectory ("packagemapping_{0}.xml" -f $safeGuid)
 
-    [System.IO.File]::WriteAllText($outputFile, $xmlContent, [System.Text.UTF8Encoding]$false)
+    [System.IO.File]::WriteAllText($outputFile, $xmlContent, [System.Text.UTF8Encoding]::new($false))
 
     $mappingPath = (Resolve-Path -LiteralPath $outputFile).Path
 
@@ -215,9 +217,9 @@ if ($metadataRows.Count -eq 0) {
     exit 1
 }
 
-$metadataFilePath = Join-Path $OutputDirectory "codebeamer-import-metadata.json"
+$metadataFilePath = Join-Path $resolvedOutputDirectory "codebeamer-import-metadata.json"
 $jsonContent = $metadataRows | ConvertTo-Json -Depth 12
-[System.IO.File]::WriteAllText($metadataFilePath, $jsonContent, [System.Text.UTF8Encoding]$false)
+[System.IO.File]::WriteAllText($metadataFilePath, $jsonContent, [System.Text.UTF8Encoding]::new($false))
 
 Write-Host "Exported $($metadataRows.Count) mapping file(s)."
 Write-Host "Metadata file: $metadataFilePath"
