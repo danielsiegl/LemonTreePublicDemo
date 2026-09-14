@@ -44,7 +44,7 @@ function Get-GitHubRepositoryFromOrigin {
     }
 
     $trimmed = $originUrl.Trim()
-    if ($trimmed -match 'github\.com[:/](?<repo>[^/]+/[^/.]+)(?:\.git)?$') {
+    if ($trimmed -match 'github\.com[:/](?<repo>[^/]+/[^/]+?)(?:\.git)?$') {
         return $Matches['repo']
     }
 
