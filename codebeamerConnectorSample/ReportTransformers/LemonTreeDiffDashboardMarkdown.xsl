@@ -163,6 +163,53 @@
 <xsl:text>&#10;</xsl:text>
 </xsl:if>
 
+<!-- Unified Changes by Package Table -->
+<xsl:text>### 📊 Changes by Package&#10;&#10;</xsl:text>
+<xsl:text>| Package | Changes | &#128994; New | &#128993; Modified | &#128308; Removed | &#128309; Moved | &#128995; Child Modified |&#10;</xsl:text>
+<xsl:text>| :--- | :---: | :---: | :---: | :---: | :---: | :---: |&#10;</xsl:text>
+<xsl:for-each select="cr:changes/cr:package">
+  <xsl:sort select="count(.//cr:element[count(.|$visibleElements) = count($visibleElements)])" data-type="number" order="descending"/>
+  <xsl:variable name="mine" select=".//cr:element[count(.|$visibleElements) = count($visibleElements)]"/>
+  <xsl:variable name="n" select="count($mine)"/>
+  <xsl:if test="$n &gt; 0">
+    <xsl:variable name="pNew" select="count($mine[contains(@diffState, 'New')])"/>
+    <xsl:variable name="pRem" select="count($mine[contains(@diffState, 'Removed') and not(contains(@diffState, 'New'))])"/>
+    <xsl:variable name="pMov" select="count($mine[contains(@diffState, 'Moved') and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed'))])"/>
+    <xsl:variable name="pMod" select="count($mine[(starts-with(@diffState, 'Modified') or contains(@diffState, 'Modified,')) and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed')) and not(contains(@diffState, 'Moved'))])"/>
+    <xsl:variable name="pSub" select="count($mine[contains(@diffState, 'SubElementModified') and not(starts-with(@diffState, 'Modified')) and not(contains(@diffState, 'Modified,')) and not(contains(@diffState, 'New')) and not(contains(@diffState, 'Removed')) and not(contains(@diffState, 'Moved'))])"/>
+    <xsl:text>| `</xsl:text>
+    <xsl:call-template name="escapePipes">
+      <xsl:with-param name="text" select="@name"/>
+    </xsl:call-template>
+    <xsl:text>` | </xsl:text>
+    <xsl:value-of select="$n"/>
+    <xsl:text> | </xsl:text>
+    <xsl:value-of select="$pNew"/>
+    <xsl:text> | </xsl:text>
+    <xsl:value-of select="$pMod"/>
+    <xsl:text> | </xsl:text>
+    <xsl:value-of select="$pRem"/>
+    <xsl:text> | </xsl:text>
+    <xsl:value-of select="$pMov"/>
+    <xsl:text> | </xsl:text>
+    <xsl:value-of select="$pSub"/>
+    <xsl:text> |&#10;</xsl:text>
+  </xsl:if>
+</xsl:for-each>
+<xsl:text>| **Total** | **</xsl:text>
+<xsl:value-of select="$cAll"/>
+<xsl:text>** | **</xsl:text>
+<xsl:value-of select="$cNew"/>
+<xsl:text>** | **</xsl:text>
+<xsl:value-of select="$cModified"/>
+<xsl:text>** | **</xsl:text>
+<xsl:value-of select="$cRemoved"/>
+<xsl:text>** | **</xsl:text>
+<xsl:value-of select="$cMoved"/>
+<xsl:text>** | **</xsl:text>
+<xsl:value-of select="$cSub"/>
+<xsl:text>** |&#10;&#10;</xsl:text>
+
 <!-- Collapsible Changed Elements List -->
 <xsl:if test="$cAll &gt; 0">
 <xsl:text>&lt;details&gt;&#10;&lt;summary&gt;&lt;b&gt;📋 All Changed Elements (</xsl:text>
