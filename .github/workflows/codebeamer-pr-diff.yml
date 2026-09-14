@@ -148,10 +148,10 @@ jobs:
               ? `Open changes in LemonTree Web: [Review session](${sessionWebUrl})\n\nSession file: [Session File](${sessionUrl})`
               : '_LemonTree Web review session was not published._';
 
-            let body = `${marker}\n## Codebeamer Import Diff\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
+            let body = `${marker}\n## Codebeamer vs Model in Git comparison\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
             if (body.length > maxBodyLength) {
               const available = maxBodyLength - marker.length - 700;
-              body = `${marker}\n## Codebeamer Import Diff\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report.substring(0, available)}\n\n_Report truncated because it exceeded the GitHub comment size limit. Download the full Markdown report and LemonTree session from the [workflow artifacts](${runUrl})._`;
+              body = `${marker}\n## Codebeamer vs Model in Git comparison\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report.substring(0, available)}\n\n_Report truncated because it exceeded the GitHub comment size limit. Download the full Markdown report and LemonTree session from the [workflow artifacts](${runUrl})._`;
             }
 
             const { data: comments } = await github.rest.issues.listComments({
