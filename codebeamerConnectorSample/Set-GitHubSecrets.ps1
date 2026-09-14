@@ -89,6 +89,7 @@ $secretMappings = [ordered]@{
     CodebeamerUser     = 'CODEBEAMER_USER'
     CodebeamerPassword = 'CODEBEAMER_PASSWORD'
     LieberLieberRLM    = 'LEMONTREE_LICENSE'
+    NexusAuthentication = 'NEXUSAUTHENTICATION'
 }
 
 $missing = @($secretMappings.Keys | Where-Object { [string]::IsNullOrWhiteSpace($secrets[$_]) })

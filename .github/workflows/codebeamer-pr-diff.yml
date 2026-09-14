@@ -12,6 +12,9 @@ permissions:
   pull-requests: write
   issues: write
 
+env:
+  REVIEW_SESSION_URL: https://nexus.lieberlieber.com/repository/lemontree-session
+
 jobs:
   codebeamer-pr-diff:
     if: github.event.pull_request.head.repo.full_name == github.repository
@@ -74,6 +77,35 @@ jobs:
             -StylesheetPath ".\ReportTransformers\LemonTreeDiffDashboardMarkdown.xsl" `
             -OutputPath ".\.tmp\DiffReport-codebeamer.md"
 
+      - name: Publish LemonTree Web session
+        id: publishSession
+        env:
+          NEXUS_AUTHENTICATION: ${{ secrets.NEXUSAUTHENTICATION }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NEXUS_AUTHENTICATION)) {
+            throw "Missing required GitHub secret: NEXUSAUTHENTICATION"
+          }
+
+          $sourceSessionPath = ".\.tmp\session-codebeamer.ltsfs"
+          if (-not (Test-Path -LiteralPath $sourceSessionPath -PathType Leaf)) {
+            throw "LemonTree session file was not generated: $sourceSessionPath"
+          }
+
+          $sessionFileName = "LemonTreePublicDemo-PR-${{ github.event.pull_request.number }}-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}-codebeamer.ltsfs"
+          $publishedSessionPath = Join-Path ".\.tmp" $sessionFileName
+          Copy-Item -LiteralPath $sourceSessionPath -Destination $publishedSessionPath -Force
+
+          $targetUrl = "$env:REVIEW_SESSION_URL/$sessionFileName"
+          while (Test-Path Alias:curl) { Remove-Item Alias:curl }
+          curl "-u$env:NEXUS_AUTHENTICATION" -T $publishedSessionPath $targetUrl
+          if ($LASTEXITCODE -ne 0) {
+            throw "Failed to upload LemonTree session file to $env:REVIEW_SESSION_URL."
+          }
+
+          $webUrl = "https://lemontree2.4biz-94523.k8s.nextlayer.at/web?sessionAutoStart=true&sessionFromUrl=$targetUrl"
+          "sessionUrl=$targetUrl" >> $env:GITHUB_OUTPUT
+          "webUrl=$webUrl" >> $env:GITHUB_OUTPUT
+
       - name: Upload Codebeamer diff artifacts
         if: always()
         uses: actions/upload-artifact@v7.0.0
@@ -84,7 +116,7 @@ jobs:
           path: |
             codebeamerConnectorSample/.tmp/DiffReport-codebeamer.xml
             codebeamerConnectorSample/.tmp/DiffReport-codebeamer.md
-            codebeamerConnectorSample/.tmp/session-codebeamer.ltsfs
+            codebeamerConnectorSample/.tmp/*.ltsfs
             codebeamerConnectorSample/.tmp/codebeamer-changes-count.txt
             codebeamerConnectorSample/.tmp/packagemappings/codebeamer-import-metadata.json
             codebeamerConnectorSample/logs/**
@@ -101,6 +133,8 @@ jobs:
             const reportPath = path.join(workspace, 'codebeamerConnectorSample', '.tmp', 'DiffReport-codebeamer.md');
             const changesPath = path.join(workspace, 'codebeamerConnectorSample', '.tmp', 'codebeamer-changes-count.txt');
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const sessionWebUrl = '${{ steps.publishSession.outputs.webUrl }}';
+            const sessionUrl = '${{ steps.publishSession.outputs.sessionUrl }}';
             const maxBodyLength = 64000;
 
             let report = fs.existsSync(reportPath)
@@ -109,11 +143,14 @@ jobs:
             const changes = fs.existsSync(changesPath)
               ? fs.readFileSync(changesPath, 'utf8').trim()
               : 'Changes count was not generated.';
+            const sessionLinks = sessionWebUrl
+              ? `Open changes in LemonTree Web: [Review session](${sessionWebUrl})\n\nSession file: ${sessionUrl}`
+              : '_LemonTree Web review session was not published._';
 
-            let body = `${marker}\n## Codebeamer Import Diff\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
+            let body = `${marker}\n## Codebeamer Import Diff\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
             if (body.length > maxBodyLength) {
               const available = maxBodyLength - marker.length - 700;
-              body = `${marker}\n## Codebeamer Import Diff\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report.substring(0, available)}\n\n_Report truncated because it exceeded the GitHub comment size limit. Download the full Markdown report and LemonTree session from the [workflow artifacts](${runUrl})._`;
+              body = `${marker}\n## Codebeamer Import Diff\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report.substring(0, available)}\n\n_Report truncated because it exceeded the GitHub comment size limit. Download the full Markdown report and LemonTree session from the [workflow artifacts](${runUrl})._`;
             }
 
             const { data: comments } = await github.rest.issues.listComments({

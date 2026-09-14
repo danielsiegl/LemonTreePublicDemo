@@ -29,6 +29,7 @@ It must contain:
 | `CodebeamerUser` | User name used to log in to Codebeamer |
 | `CodebeamerPassword` | Password of that user |
 | `LieberLieberRLM` | LieberLieber RLM license string |
+| `NexusAuthentication` | Nexus credentials in `user:password` format, used by the PR workflow to publish LemonTree Web session files |
 
 Format: one `Key=Value` pair per line; lines starting with `#` are comments. Because the license
 must be a single line, spaces in the license string may be written as `|` — the scripts convert
@@ -40,6 +41,7 @@ CodebeamerServer=https://codebeamer.example.com/cb/
 CodebeamerUser=demo.user
 CodebeamerPassword=your-password
 LieberLieberRLM=your-lieberlieber-rlm-license-string
+NexusAuthentication=your-nexus-user:your-nexus-password
 ```
 
 Verify the file at any time:
@@ -102,6 +104,7 @@ Add these GitHub Actions secrets before enabling the workflow:
 | `CODEBEAMER_USER` | `CodebeamerUser` | User name used to log in to Codebeamer |
 | `CODEBEAMER_PASSWORD` | `CodebeamerPassword` | Password of that user |
 | `LEMONTREE_LICENSE` | `LieberLieberRLM` | LieberLieber RLM license string |
+| `NEXUSAUTHENTICATION` | `NexusAuthentication` | Nexus credentials in `user:password` format for publishing the LemonTree Web session file |
 
 `GITHUB_TOKEN` is provided automatically by GitHub Actions and is used for updating the PR comment.
 Codebeamer project and tracker IDs are read from the model mappings; they are not separate secrets.
@@ -109,7 +112,8 @@ The runner needs network access to `nexus.lieberlieber.com`, your Codebeamer ser
 license server referenced by the license string.
 
 Generated CI artifacts include the XML diff, Markdown diff, LemonTree session file, import metadata
-and connector logs when available.
+and connector logs when available. The workflow also uploads the `.ltsfs` session file to the
+LemonTree session repository and adds a LemonTree Web review link at the top of the PR comment.
 
 ## Tools
 

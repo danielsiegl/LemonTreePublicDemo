@@ -52,8 +52,13 @@ if ([string]::IsNullOrWhiteSpace($LicenseContent)) {
 New-ParentDirectory -Path $OutputPath
 
 # The tools reject licenses with newlines, so pipes act as space placeholders.
-$licenseProcessed = $LicenseContent -replace '\|', ' '
-[System.IO.File]::WriteAllText($OutputPath, $licenseProcessed, [System.Text.UTF8Encoding]$false)
+$licenseProcessed = $LicenseContent.Trim()
+if ($licenseProcessed.StartsWith('LieberLieberRLM=', [System.StringComparison]::OrdinalIgnoreCase)) {
+    Write-Warning "License content includes a leading 'LieberLieberRLM=' prefix. Writing only the value after the prefix."
+    $licenseProcessed = $licenseProcessed.Substring('LieberLieberRLM='.Length).Trim()
+}
+$licenseProcessed = $licenseProcessed -replace '\|', ' '
+[System.IO.File]::WriteAllText($OutputPath, $licenseProcessed, [System.Text.UTF8Encoding]::new($false))
 
 if (-not (Test-Path -LiteralPath $OutputPath)) {
     Write-Error "Failed to create license file: $OutputPath"
