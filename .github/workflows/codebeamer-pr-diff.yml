@@ -144,7 +144,7 @@ jobs:
               ? fs.readFileSync(changesPath, 'utf8').trim()
               : 'Changes count was not generated.';
             const sessionLinks = sessionWebUrl
-              ? `Open changes in LemonTree Web: [Review session](${sessionWebUrl})\n\nSession file: ${sessionUrl}`
+              ? `Open changes in LemonTree Web: [Review session](${sessionWebUrl})\n\nSession file: [Session File](${sessionUrl})`
               : '_LemonTree Web review session was not published._';
 
             let body = `${marker}\n## Codebeamer Import Diff\n\n${sessionLinks}\n\n${changes}\n\nCommit: \`${context.payload.pull_request.head.sha.substring(0, 7)}\`\n\n${report}`;
