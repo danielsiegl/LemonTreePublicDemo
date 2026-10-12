@@ -128,8 +128,8 @@ re-download of everything.
 
 | Tool | Source |
 | --- | --- |
-| `LemonTree.Automation` | [LemonTree.Automation.Zip_Deploy.zip](https://nexus.lieberlieber.com/repository/lemontree-release/LemonTree.Automation/LemonTree.Automation.Zip_Deploy.zip) |
-| `LemonTree.Connect.Codebeamer.Automation` | [LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip](https://nexus.lieberlieber.com/repository/lemontree-release/LemonTree.Automation/LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip) |
+| `LemonTree.Automation` | [LemonTree.Automation.Zip_Deploy.zip](https://lieberlieber.nexus/repository/lemontree-release/LemonTree.Automation/LemonTree.Automation.Zip_Deploy.zip) |
+| `LemonTree.Connect.Codebeamer.Automation` | [LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip](https://lieberlieber.nexus/repository/lemontree-release/LemonTree.Automation/LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip) |
 | `sqlite3` | [sqlite.org](https://www.sqlite.org/) — used to read the connector configuration out of the `.qeax` model |
 
 They are installed into `.tools\` which is git-ignored.

@@ -13,7 +13,7 @@ permissions:
   issues: write
 
 env:
-  REVIEW_SESSION_URL: https://nexus.lieberlieber.com/repository/lemontree-session
+  REVIEW_SESSION_URL: https://lieberlieber.nexus/repository/lemontree-session
 
 jobs:
   codebeamer-pr-diff:
