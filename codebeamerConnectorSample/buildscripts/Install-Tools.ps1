@@ -50,13 +50,13 @@ if ([string]::IsNullOrWhiteSpace($ToolsDirectory)) {
 $tools = @(
     [pscustomobject]@{
         Name       = 'LemonTree.Automation'
-        Url        = 'https://nexus.lieberlieber.com/repository/lemontree-release/LemonTree.Automation/LemonTree.Automation.Zip_Deploy.zip'
+        Url        = 'https://lieberlieber.nexus/repository/lemontree-release/LemonTree.Automation/LemonTree.Automation.Zip_Deploy.zip'
         Directory  = 'LemonTree.Automation'
         Executable = 'LemonTree.Automation.exe'
     },
     [pscustomobject]@{
         Name       = 'LemonTree.Connect.Codebeamer.Automation'
-        Url        = 'https://nexus.lieberlieber.com/repository/lemontree-release/LemonTree.Automation/LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip'
+        Url        = 'https://lieberlieber.nexus/repository/lemontree-release/LemonTree.Automation/LemonTree.Connect.Automation.Codebeamer.Windows_latest.zip'
         Directory  = 'LemonTree.Connect.Codebeamer.Automation'
         Executable = 'LemonTree.Connect.Codebeamer.Automation.exe'
     },
